@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="requestanimationframe.js"></script>
+    <title>动画</title>
+</head>
+
+<body>
+    <div id="test" style="width:1px;height:17px;background:#0f0;">0%</div>
+    <input type="button" value="Run" id="run" />
+
+    <script>
+        var ele = document.getElementById("test");
+        var progress = 0;
+
+        function step(timestamp) {
+            console.log('回调队列被触发的时间-------' + timestamp);
+            progress += 1;
+            ele.style.width = progress + "%";
+            ele.innerHTML = progress + "%";
+            if (progress < 100) {
+                requestAnimationFrame(step);
+            } else {
+                cancelAnimationFrame(timer);
+            }
+        }
+       var timer = requestAnimationFrame(step);
+        document.getElementById("run").addEventListener("click", function() {
+            ele.style.width = "1px";
+            progress = 0;
+            requestAnimationFrame(step);
+        }, false);
+
+    </script>
+</body>
+
+</html>
